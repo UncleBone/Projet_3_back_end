@@ -1,6 +1,5 @@
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-// import { User, Prisma } from '@prisma/client';
 import { USERS, Prisma } from './generated/prisma/client';
 
 @Injectable()
@@ -49,6 +48,7 @@ export class UserService {
   }
 
   async loginUser({ email, password }): Promise<{ statusCode: number }> {
+    console.log("login user",email,password);
     const user = await this.user( { email });
     const bcrypt = require('bcrypt');
     console.log("login user",user);

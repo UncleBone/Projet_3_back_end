@@ -7,10 +7,13 @@ import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 export class PrismaService extends PrismaClient {
   constructor() {
     const adapter = new PrismaMariaDb({
-    host: "localhost",
-    port: 3306,
-    connectionLimit: 5,
-  });
+      user: "root",
+      password: "root",
+      host: "localhost",
+      database: "chatop_db",
+      port: 3306,
+      connectionLimit: 5,
+    });
     super({ adapter });
   }
 }
