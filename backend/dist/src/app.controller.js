@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-const roles_guards_1 = require("./roles.guards");
 let AppController = class AppController {
     appService;
     constructor(appService) {
@@ -36,7 +35,6 @@ __decorate([
     __metadata("design:returntype", String)
 ], AppController.prototype, "getHello", null);
 __decorate([
-    (0, common_1.UseGuards)(roles_guards_1.RolesGuard),
     (0, common_1.Get)("projects/:id"),
     __param(0, (0, common_1.Param)("id", common_1.ParseIntPipe)),
     __metadata("design:type", Function),

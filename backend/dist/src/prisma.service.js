@@ -12,10 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PrismaService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("./generated/prisma/client");
-const adapter_better_sqlite3_1 = require("@prisma/adapter-better-sqlite3");
+const adapter_mariadb_1 = require("@prisma/adapter-mariadb");
 let PrismaService = class PrismaService extends client_1.PrismaClient {
     constructor() {
-        const adapter = new adapter_better_sqlite3_1.PrismaBetterSqlite3({ url: process.env.DATABASE_URL });
+        const adapter = new adapter_mariadb_1.PrismaMariaDb({
+            user: "root",
+            password: "root",
+            host: "localhost",
+            database: "chatop_db",
+            port: 3306,
+            connectionLimit: 5,
+        });
         super({ adapter });
     }
 };
