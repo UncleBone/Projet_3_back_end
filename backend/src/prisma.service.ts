@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaClient } from './generated/prisma/client';
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 
@@ -13,6 +13,7 @@ export class PrismaService extends PrismaClient {
       database: "chatop_db",
       port: 3306,
       connectionLimit: 5,
+      allowPublicKeyRetrieval: true
     });
     super({ adapter });
   }

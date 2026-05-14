@@ -1,40 +1,53 @@
 import {
   Controller,
   Get,
-  Param,
   Post,
   Body,
-  Put,
-  Delete,
-  ParseIntPipe, Request, UseGuards
+  Request, UseGuards,
+  BadRequestException
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
-import { USERS as UserModel } from '../generated/prisma/client';
-import { AuthGuard } from '@nestjs/passport';
+import { USERS } from '../generated/prisma/client';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller()
 export class UserController {
   constructor(
     private readonly userService: UserService,
+    private authService: AuthService
   ) {}
 
   @Post('api/auth/register')
   async signupUser(
     @Body() userData: { name: string; email: string; password: string },
-    ): Promise<UserModel> {
-    return this.userService.createUser(userData);
+    ) {
+    let user: USERS | BadRequestException;
+    try{
+      user = await this.userService.createUser(userData);
+    } catch(error){
+      throw error;
+    }
+    return this.authService.login(user);
   }
 
-  // @UseGuards(AuthGuard('local'))
+  @UseGuards(LocalAuthGuard)
   @Post('api/auth/login')
-  async loginUser(
-    // @Request() req) {
-    //   console.log('login',req)
-    //   return req.user;
-    // }
-    @Body() userData: { email: string; password: string },
-    ): Promise<{ statusCode: number }> {
-      console.log("controller loginUser",userData)
-    return this.userService.loginUser(userData);
+  async loginUser( @Request() req) {
+    return this.authService.login(req.user);
   }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('api/auth/logout')
+  async logout(@Request() req) {
+    return req.logout();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('api/auth/me')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+
 }

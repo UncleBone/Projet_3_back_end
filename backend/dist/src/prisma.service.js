@@ -22,6 +22,7 @@ let PrismaService = class PrismaService extends client_1.PrismaClient {
             database: "chatop_db",
             port: 3306,
             connectionLimit: 5,
+            allowPublicKeyRetrieval: true
         });
         super({ adapter });
     }
