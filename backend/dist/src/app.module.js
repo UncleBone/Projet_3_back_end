@@ -19,14 +19,17 @@ const user_controller_1 = require("./controllers/user.controller");
 const rental_controller_1 = require("./controllers/rental.controller");
 const rental_service_1 = require("./services/rental.service");
 const rental_repo_1 = require("./repository/rental.repo");
+const message_service_1 = require("./services/message.service");
+const message_repo_1 = require("./repository/message.repo");
+const message_controller_1 = require("./controllers/message.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [config_1.ConfigModule.forRoot(), auth_module_1.AuthModule],
-        controllers: [app_controller_1.AppController, user_controller_1.UserController, rental_controller_1.RentalController],
-        providers: [app_service_1.AppService, user_service_1.UserService, prisma_service_1.PrismaService, user_repo_1.UserRepo, rental_service_1.RentalService, rental_repo_1.RentalRepo],
+        controllers: [app_controller_1.AppController, user_controller_1.UserController, rental_controller_1.RentalController, message_controller_1.MessageController],
+        providers: [app_service_1.AppService, user_service_1.UserService, prisma_service_1.PrismaService, user_repo_1.UserRepo, rental_service_1.RentalService, rental_repo_1.RentalRepo, message_service_1.MessageService, message_repo_1.MessageRepo],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

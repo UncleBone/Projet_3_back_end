@@ -60,10 +60,4 @@ export class RentalRepo {
       where,
     });
   }
-
-  // async deleteUser(where: Prisma.USERSWhereUniqueInput): Promise<USERS> {
-  //   return this.prisma.uSERS.delete({
-  //     where,
-  //   });
-  // }
 }
