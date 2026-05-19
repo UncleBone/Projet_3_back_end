@@ -16,14 +16,17 @@ const prisma_service_1 = require("./prisma.service");
 const auth_module_1 = require("./auth/auth.module");
 const user_repo_1 = require("./repository/user.repo");
 const user_controller_1 = require("./controllers/user.controller");
+const rental_controller_1 = require("./controllers/rental.controller");
+const rental_service_1 = require("./services/rental.service");
+const rental_repo_1 = require("./repository/rental.repo");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [config_1.ConfigModule.forRoot(), auth_module_1.AuthModule],
-        controllers: [app_controller_1.AppController, user_controller_1.UserController],
-        providers: [app_service_1.AppService, user_service_1.UserService, prisma_service_1.PrismaService, user_repo_1.UserRepo],
+        controllers: [app_controller_1.AppController, user_controller_1.UserController, rental_controller_1.RentalController],
+        providers: [app_service_1.AppService, user_service_1.UserService, prisma_service_1.PrismaService, user_repo_1.UserRepo, rental_service_1.RentalService, rental_repo_1.RentalRepo],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

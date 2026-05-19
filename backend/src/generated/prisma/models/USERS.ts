@@ -620,7 +620,7 @@ export type $USERSPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type USERSGetPayload<S extends boolean | null | undefined | USERSDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$USERSPayload, S>
 
 export type USERSCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<USERSFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  Omit<USERSFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
     select?: USERSCountAggregateInputType | true
   }
 
@@ -1014,6 +1014,7 @@ export type USERSFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Filter, which USERS to fetch.
    */
   where: Prisma.USERSWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1036,6 +1037,7 @@ export type USERSFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.
    * Filter, which USERS to fetch.
    */
   where: Prisma.USERSWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1088,6 +1090,7 @@ export type USERSFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Filter by unique combinations of USERS.
    */
   distinct?: Prisma.USERSScalarFieldEnum | Prisma.USERSScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1140,6 +1143,7 @@ export type USERSFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    * Filter by unique combinations of USERS.
    */
   distinct?: Prisma.USERSScalarFieldEnum | Prisma.USERSScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1192,6 +1196,7 @@ export type USERSFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Filter by unique combinations of USERS.
    */
   distinct?: Prisma.USERSScalarFieldEnum | Prisma.USERSScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1214,6 +1219,7 @@ export type USERSCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * The data needed to create a USERS.
    */
   data: Prisma.XOR<Prisma.USERSCreateInput, Prisma.USERSUncheckedCreateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1251,6 +1257,7 @@ export type USERSUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Choose, which USERS to update.
    */
   where: Prisma.USERSWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1299,6 +1306,7 @@ export type USERSUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * In case the USERS was found with the provided `where` argument, update it with this data.
    */
   update: Prisma.XOR<Prisma.USERSUpdateInput, Prisma.USERSUncheckedUpdateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1321,6 +1329,7 @@ export type USERSDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Filter which USERS to delete.
    */
   where: Prisma.USERSWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**

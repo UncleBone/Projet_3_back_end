@@ -655,6 +655,14 @@ export const MESSAGESScalarFieldEnum = {
 export type MESSAGESScalarFieldEnum = (typeof MESSAGESScalarFieldEnum)[keyof typeof MESSAGESScalarFieldEnum]
 
 
+export const RelationLoadStrategy = {
+  query: 'query',
+  join: 'join'
+} as const
+
+export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
+
+
 export const RENTALSScalarFieldEnum = {
   id: 'id',
   name: 'name',

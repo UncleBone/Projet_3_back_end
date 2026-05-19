@@ -10,6 +10,10 @@ export class UserService {
     return this.repo.user({ email });
   }
 
+  async findUserById({ userId }: { userId: number }): Promise<USERS | null> {
+    return this.repo.userById({ userId });
+  }
+
   async createUser(data: { name: string, email: string, password: string }) {
     if(!data || !data.name || !data.email || !data.password){
         throw new BadRequestException("Missing data")

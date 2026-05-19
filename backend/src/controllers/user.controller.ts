@@ -38,16 +38,9 @@ export class UserController {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(LocalAuthGuard)
-  @Post('api/auth/logout')
-  async logout(@Request() req) {
-    return req.logout();
-  }
-
   @UseGuards(JwtAuthGuard)
   @Get('api/auth/me')
   getProfile(@Request() req) {
-    return req.user;
+    return this.userService.findUserById(req.user);
   }
-
 }

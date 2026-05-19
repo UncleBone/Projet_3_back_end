@@ -707,7 +707,7 @@ export type $MESSAGESPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type MESSAGESGetPayload<S extends boolean | null | undefined | MESSAGESDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$MESSAGESPayload, S>
 
 export type MESSAGESCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<MESSAGESFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  Omit<MESSAGESFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
     select?: MESSAGESCountAggregateInputType | true
   }
 
@@ -1101,6 +1101,7 @@ export type MESSAGESFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Filter, which MESSAGES to fetch.
    */
   where: Prisma.MESSAGESWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1123,6 +1124,7 @@ export type MESSAGESFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    * Filter, which MESSAGES to fetch.
    */
   where: Prisma.MESSAGESWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1175,6 +1177,7 @@ export type MESSAGESFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Filter by unique combinations of MESSAGES.
    */
   distinct?: Prisma.MESSAGESScalarFieldEnum | Prisma.MESSAGESScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1227,6 +1230,7 @@ export type MESSAGESFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    * Filter by unique combinations of MESSAGES.
    */
   distinct?: Prisma.MESSAGESScalarFieldEnum | Prisma.MESSAGESScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1279,6 +1283,7 @@ export type MESSAGESFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Filter by unique combinations of MESSAGES.
    */
   distinct?: Prisma.MESSAGESScalarFieldEnum | Prisma.MESSAGESScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1301,6 +1306,7 @@ export type MESSAGESCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data needed to create a MESSAGES.
    */
   data: Prisma.XOR<Prisma.MESSAGESCreateInput, Prisma.MESSAGESUncheckedCreateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1338,6 +1344,7 @@ export type MESSAGESUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Choose, which MESSAGES to update.
    */
   where: Prisma.MESSAGESWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1386,6 +1393,7 @@ export type MESSAGESUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * In case the MESSAGES was found with the provided `where` argument, update it with this data.
    */
   update: Prisma.XOR<Prisma.MESSAGESUpdateInput, Prisma.MESSAGESUncheckedUpdateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1408,6 +1416,7 @@ export type MESSAGESDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Filter which MESSAGES to delete.
    */
   where: Prisma.MESSAGESWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**

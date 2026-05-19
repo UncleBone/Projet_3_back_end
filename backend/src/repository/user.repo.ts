@@ -12,6 +12,12 @@ export class UserRepo {
     });
   }
 
+  async userById({ userId }: { userId: number }): Promise<USERS | null> {
+    return this.prisma.uSERS.findUnique({
+      where: {id: userId},
+    });
+  }
+
   async users(params: {
     skip?: number;
     take?: number;

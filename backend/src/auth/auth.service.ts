@@ -11,7 +11,6 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    console.log("validateUser",email,password)
     const user = await this.userService.findUser({email});
     const bcrypt = require('bcrypt');
     if (user && bcrypt.compareSync(password, user.password)) {
@@ -29,8 +28,5 @@ export class AuthService {
         expiresIn: '1h'
       })
     };
-    // return {
-    //   access_token: this.jwtService.sign(payload),
-    // };
   }
 }
