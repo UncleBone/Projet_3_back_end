@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { USERS } from '../generated/prisma/client';
 import { UserRepo } from 'src/repository/user.repo';
 
@@ -30,5 +30,13 @@ export class UserService {
     data.password = hash;
     
     return this.repo.createUser(data);
+  }
+
+  async getUser(id: number): Promise<USERS | null> {
+    const user = await this.findUserById({userId: id});
+    if(user === null){
+      throw new NotFoundException("Identifiant inconnu")
+    }
+    return user
   }
 }

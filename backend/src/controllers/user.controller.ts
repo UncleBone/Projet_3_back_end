@@ -1,10 +1,10 @@
 import {
   Controller,
-  Get,
-  Post,
-  Body,
-  Request, UseGuards,
-  BadRequestException
+  Get, Post,
+  Body, Request, Param,
+  UseGuards,
+  BadRequestException,
+  ParseIntPipe
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { USERS } from '../generated/prisma/client';
@@ -42,5 +42,11 @@ export class UserController {
   @Get('api/auth/me')
   getProfile(@Request() req) {
     return this.userService.findUserById(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('api/user/:id')
+  getUser(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.getUser(id)
   }
 }
