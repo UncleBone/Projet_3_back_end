@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { USERS } from '../generated/prisma/client';
 import { UserRepo } from 'src/repository/user.repo';
 
@@ -14,13 +18,13 @@ export class UserService {
     return this.repo.userById({ userId });
   }
 
-  async createUser(data: { name: string, email: string, password: string }) {
-    if(!data || !data.name || !data.email || !data.password){
-        throw new BadRequestException("Missing data")
+  async createUser(data: { name: string; email: string; password: string }) {
+    if (!data || !data.name || !data.email || !data.password) {
+      throw new BadRequestException('Missing data');
     }
     const user = await this.findUser({ email: data.email });
-    if(user !== null){
-      throw new BadRequestException("Email already exists")
+    if (user !== null) {
+      throw new BadRequestException('Email already exists');
     }
     const bcrypt = require('bcrypt');
     const saltRounds = 10;
@@ -28,15 +32,15 @@ export class UserService {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(plaintextPassword, salt);
     data.password = hash;
-    
+
     return this.repo.createUser(data);
   }
 
   async getUser(id: number): Promise<USERS | null> {
-    const user = await this.findUserById({userId: id});
-    if(user === null){
-      throw new NotFoundException("Identifiant inconnu")
+    const user = await this.findUserById({ userId: id });
+    if (user === null) {
+      throw new NotFoundException('Identifiant inconnu');
     }
-    return user
+    return user;
   }
 }

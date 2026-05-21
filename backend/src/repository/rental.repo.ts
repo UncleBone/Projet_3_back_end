@@ -8,8 +8,8 @@ export class RentalRepo {
 
   async rental({ id }: { id: number }): Promise<RENTALS | null> {
     return this.prisma.rENTALS.findUnique({
-      where: {id},
-      relationLoadStrategy: "join",
+      where: { id },
+      relationLoadStrategy: 'join',
       include: {
         USERS: true,
       },
@@ -30,21 +30,21 @@ export class RentalRepo {
       cursor,
       where,
       orderBy,
-      relationLoadStrategy: "join",
+      relationLoadStrategy: 'join',
       include: {
         USERS: true,
       },
     });
   }
 
-  async createRental(data: { 
-    name: string; 
-    surface: number; 
-    price: number, 
-    picture?: string, 
-    description: string, 
-    owner_id: number 
-  }): Promise<RENTALS> {    
+  async createRental(data: {
+    name: string;
+    surface: number;
+    price: number;
+    picture?: string;
+    description: string;
+    owner_id: number;
+  }): Promise<RENTALS> {
     return this.prisma.rENTALS.create({
       data,
     });

@@ -6,11 +6,11 @@ import { MESSAGES } from '../generated/prisma/client';
 export class MessageRepo {
   constructor(private prisma: PrismaService) {}
 
-  async createMessage(data: { 
-    user_id: number; 
-    rental_id: number; 
-    message: string 
-  }): Promise<MESSAGES> {    
+  async createMessage(data: {
+    user_id: number;
+    rental_id: number;
+    message: string;
+  }): Promise<MESSAGES> {
     return this.prisma.mESSAGES.create({
       data,
     });

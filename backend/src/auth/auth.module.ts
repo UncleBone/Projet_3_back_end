@@ -14,10 +14,18 @@ import { JwtStrategy } from './jwt.strategy';
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' }
-    })
+      signOptions: { expiresIn: '60s' },
+    }),
   ],
-  providers: [AuthService, UserService, LocalStrategy, PrismaService, JwtService, UserRepo, JwtStrategy],
-  exports: [AuthService]
+  providers: [
+    AuthService,
+    UserService,
+    LocalStrategy,
+    PrismaService,
+    JwtService,
+    UserRepo,
+    JwtStrategy,
+  ],
+  exports: [AuthService],
 })
 export class AuthModule {}

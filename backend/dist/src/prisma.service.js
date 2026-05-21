@@ -16,13 +16,13 @@ const adapter_mariadb_1 = require("@prisma/adapter-mariadb");
 let PrismaService = class PrismaService extends client_1.PrismaClient {
     constructor() {
         const adapter = new adapter_mariadb_1.PrismaMariaDb({
-            user: "root",
-            password: "root",
-            host: "localhost",
-            database: "chatop_db",
+            user: 'root',
+            password: 'root',
+            host: 'localhost',
+            database: 'chatop_db',
             port: 3306,
             connectionLimit: 5,
-            allowPublicKeyRetrieval: true
+            allowPublicKeyRetrieval: true,
         });
         super({ adapter });
     }

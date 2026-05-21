@@ -27,7 +27,15 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [config_1.ConfigModule.forRoot(), auth_module_1.AuthModule],
         controllers: [user_controller_1.UserController, rental_controller_1.RentalController, message_controller_1.MessageController],
-        providers: [user_service_1.UserService, prisma_service_1.PrismaService, user_repo_1.UserRepo, rental_service_1.RentalService, rental_repo_1.RentalRepo, message_service_1.MessageService, message_repo_1.MessageRepo],
+        providers: [
+            user_service_1.UserService,
+            prisma_service_1.PrismaService,
+            user_repo_1.UserRepo,
+            rental_service_1.RentalService,
+            rental_repo_1.RentalRepo,
+            message_service_1.MessageService,
+            message_repo_1.MessageRepo,
+        ],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

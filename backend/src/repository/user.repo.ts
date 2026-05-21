@@ -8,13 +8,13 @@ export class UserRepo {
 
   async user({ email }: { email: string }): Promise<USERS | null> {
     return this.prisma.uSERS.findUnique({
-      where: {email},
+      where: { email },
     });
   }
 
   async userById({ userId }: { userId: number }): Promise<USERS | null> {
     return this.prisma.uSERS.findUnique({
-      where: {id: userId},
+      where: { id: userId },
     });
   }
 
@@ -35,7 +35,7 @@ export class UserRepo {
     });
   }
 
-  async createUser(data: Prisma.USERSCreateInput): Promise<USERS> {    
+  async createUser(data: Prisma.USERSCreateInput): Promise<USERS> {
     return this.prisma.uSERS.create({
       data,
     });

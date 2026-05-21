@@ -14,7 +14,15 @@ import { MessageController } from './controllers/message.controller';
 
 @Module({
   imports: [ConfigModule.forRoot(), AuthModule],
-  controllers: [UserController,RentalController, MessageController],
-  providers: [UserService, PrismaService, UserRepo, RentalService, RentalRepo, MessageService, MessageRepo ],
+  controllers: [UserController, RentalController, MessageController],
+  providers: [
+    UserService,
+    PrismaService,
+    UserRepo,
+    RentalService,
+    RentalRepo,
+    MessageService,
+    MessageRepo,
+  ],
 })
 export class AppModule {}
