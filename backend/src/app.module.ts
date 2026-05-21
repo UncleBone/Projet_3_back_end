@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UserService } from './services/user.service';
 import { PrismaService } from './prisma.service';
 import { AuthModule } from './auth/auth.module';
@@ -16,7 +14,7 @@ import { MessageController } from './controllers/message.controller';
 
 @Module({
   imports: [ConfigModule.forRoot(), AuthModule],
-  controllers: [AppController,UserController,RentalController, MessageController],
-  providers: [AppService, UserService, PrismaService, UserRepo, RentalService, RentalRepo, MessageService, MessageRepo ],
+  controllers: [UserController,RentalController, MessageController],
+  providers: [UserService, PrismaService, UserRepo, RentalService, RentalRepo, MessageService, MessageRepo ],
 })
 export class AppModule {}

@@ -1,6 +1,4 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { MESSAGES } from '../generated/prisma/client';
-import { UserService } from './user.service';
 import { MessageRepo } from 'src/repository/message.repo';
 import { RentalService } from './rental.service';
 

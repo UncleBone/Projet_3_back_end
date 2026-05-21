@@ -9,8 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
 const user_service_1 = require("./services/user.service");
 const prisma_service_1 = require("./prisma.service");
 const auth_module_1 = require("./auth/auth.module");
@@ -28,8 +26,8 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [config_1.ConfigModule.forRoot(), auth_module_1.AuthModule],
-        controllers: [app_controller_1.AppController, user_controller_1.UserController, rental_controller_1.RentalController, message_controller_1.MessageController],
-        providers: [app_service_1.AppService, user_service_1.UserService, prisma_service_1.PrismaService, user_repo_1.UserRepo, rental_service_1.RentalService, rental_repo_1.RentalRepo, message_service_1.MessageService, message_repo_1.MessageRepo],
+        controllers: [user_controller_1.UserController, rental_controller_1.RentalController, message_controller_1.MessageController],
+        providers: [user_service_1.UserService, prisma_service_1.PrismaService, user_repo_1.UserRepo, rental_service_1.RentalService, rental_repo_1.RentalRepo, message_service_1.MessageService, message_repo_1.MessageRepo],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

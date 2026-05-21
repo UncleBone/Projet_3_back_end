@@ -6,11 +6,19 @@ import {
   BadRequestException,
   ParseIntPipe
 } from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiBadRequestResponse, ApiOkResponse, 
+  ApiUnauthorizedResponse, ApiNotFoundResponse } from '@nestjs/swagger';
 import { UserService } from '../services/user.service';
 import { USERS } from '../generated/prisma/client';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+
+interface UserData {
+  "name": string; 
+  "email": string; 
+  "password": string 
+}
 
 @Controller()
 export class UserController {
@@ -19,9 +27,31 @@ export class UserController {
     private authService: AuthService
   ) {}
 
+  @ApiOperation({description: "Register a new user"})
+  @ApiBody({ 
+    required: true,
+    schema: {
+      type: "object",
+      properties: {
+        "name": { type: "string" },
+        "email": { type: "string" },
+        "password": { type: "string" }
+      }
+    }
+  })
+  @ApiBadRequestResponse({
+		description: "Fields are missing, or email already exists."
+	})
+  @ApiOkResponse({
+    description: "New user succesfully registered.",
+    schema: {
+      type: "object",
+      properties: { "access_token": { type: "string" }}
+    }
+  })
   @Post('api/auth/register')
   async signupUser(
-    @Body() userData: { name: string; email: string; password: string },
+    @Body() userData: UserData,
     ) {
     let user: USERS | BadRequestException;
     try{
@@ -32,18 +62,78 @@ export class UserController {
     return this.authService.login(user);
   }
 
+  @ApiOperation({description: "Login user"})
+  @ApiBody({ 
+    required: true,
+    schema: {
+      type: "object",
+      properties: {
+        "email": { type: "string" },
+        "password": { type: "string" }
+      }
+    }
+  })
+  @ApiUnauthorizedResponse({
+    description: "Invalid email or password"
+  })
+  @ApiOkResponse({
+    description: "When the login is succesful.",
+    schema: {
+      type: "object",
+      properties: { "access_token": { type: "string" }}
+    }
+  })
   @UseGuards(LocalAuthGuard)
   @Post('api/auth/login')
   async loginUser( @Request() req) {
     return this.authService.login(req.user);
   }
 
+  @ApiOperation({description: "Get current user"})
+  @ApiUnauthorizedResponse({
+    description: "Invalid or missing access token"
+  })
+  @ApiOkResponse({
+    description: "Return user info.",
+    schema: {
+      type: "object",
+      properties: { 
+        "id": { type: "number" },
+        "email": { type: "string" },
+        "name": { type: "string" },
+        "password": { type: "string" },
+        "created_at": { type: "string" },
+        "updated_at": { type: "string" },
+      }
+    }
+  })
   @UseGuards(JwtAuthGuard)
   @Get('api/auth/me')
   getProfile(@Request() req) {
     return this.userService.findUserById(req.user);
   }
 
+  @ApiUnauthorizedResponse({
+    description: "Invalid or missing access token"
+  })
+  @ApiOperation({description: "Get user by ID"})
+  @ApiNotFoundResponse({
+    description: "unknown user ID"
+  })
+  @ApiOkResponse({
+    description: "Return user info.",
+    schema: {
+      type: "object",
+      properties: { 
+        "id": { type: "number" },
+        "email": { type: "string" },
+        "name": { type: "string" },
+        "password": { type: "string" },
+        "created_at": { type: "string" },
+        "updated_at": { type: "string" },
+      }
+    }
+  })
   @UseGuards(JwtAuthGuard)
   @Get('api/user/:id')
   getUser(@Param('id', ParseIntPipe) id: number) {

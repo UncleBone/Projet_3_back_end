@@ -1,13 +1,11 @@
 import { Injectable, NotFoundException, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { RENTALS } from '../generated/prisma/client';
 import { RentalRepo } from 'src/repository/rental.repo';
-import { UserService } from './user.service';
 
 @Injectable()
 export class RentalService {
   constructor(
     private repo: RentalRepo,
-    private userService: UserService
   ) {}
 
   async findRental({ id }: { id: number }): Promise<RENTALS | null> {
