@@ -35,7 +35,7 @@ export class MessageController {
     },
   })
   @UseGuards(JwtAuthGuard)
-  @Post('api/messages')
+  @Post('messages')
   async createMessage(
     @Body() data: { rental_id: number; user_id: number; message: string },
     @Request() req,

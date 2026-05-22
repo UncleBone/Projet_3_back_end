@@ -24,12 +24,6 @@ import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateUserDto } from 'src/dto/user.dto';
 
-interface UserData {
-  name: string;
-  email: string;
-  password: string;
-}
-
 @Controller()
 export class UserController {
   constructor(
@@ -59,7 +53,7 @@ export class UserController {
       properties: { token: { type: 'string' } },
     },
   })
-  @Post('api/auth/register')
+  @Post('auth/register')
   async signupUser(@Body() userData: CreateUserDto) {
     let user: USERS | BadRequestException;
     try {
@@ -92,7 +86,7 @@ export class UserController {
     },
   })
   @UseGuards(LocalAuthGuard)
-  @Post('api/auth/login')
+  @Post('auth/login')
   async loginUser(@Request() req) {
     return this.authService.login(req.user);
   }
@@ -116,7 +110,7 @@ export class UserController {
     },
   })
   @UseGuards(JwtAuthGuard)
-  @Get('api/auth/me')
+  @Get('auth/me')
   getProfile(@Request() req) {
     return this.userService.findUserById(req.user);
   }
@@ -143,7 +137,7 @@ export class UserController {
     },
   })
   @UseGuards(JwtAuthGuard)
-  @Get('api/user/:id')
+  @Get('user/:id')
   getUser(@Param('id', ParseIntPipe) id: number) {
     return this.userService.getUser(id);
   }
