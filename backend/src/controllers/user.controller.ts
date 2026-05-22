@@ -22,6 +22,7 @@ import { USERS } from '../generated/prisma/client';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CreateUserDto } from 'src/dto/user.dto';
 
 interface UserData {
   name: string;
@@ -55,11 +56,11 @@ export class UserController {
     description: 'New user succesfully registered.',
     schema: {
       type: 'object',
-      properties: { access_token: { type: 'string' } },
+      properties: { token: { type: 'string' } },
     },
   })
   @Post('api/auth/register')
-  async signupUser(@Body() userData: UserData) {
+  async signupUser(@Body() userData: CreateUserDto) {
     let user: USERS | BadRequestException;
     try {
       user = await this.userService.createUser(userData);
@@ -87,7 +88,7 @@ export class UserController {
     description: 'When the login is succesful.',
     schema: {
       type: 'object',
-      properties: { access_token: { type: 'string' } },
+      properties: { token: { type: 'string' } },
     },
   })
   @UseGuards(LocalAuthGuard)

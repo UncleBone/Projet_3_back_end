@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { USERS } from '../generated/prisma/client';
 import { UserRepo } from 'src/repository/user.repo';
+import { UserResponseDto } from 'src/dto/user.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UserService {
@@ -14,8 +16,11 @@ export class UserService {
     return this.repo.user({ email });
   }
 
-  async findUserById({ userId }: { userId: number }): Promise<USERS | null> {
-    return this.repo.userById({ userId });
+  async findUserById({ userId }: { userId: number }): Promise<UserResponseDto | null> {
+    const user = await this.repo.userById({ userId });
+    return plainToInstance(UserResponseDto, user, {
+      excludeExtraneousValues: true,
+    });
   }
 
   async createUser(data: { name: string; email: string; password: string }) {
@@ -36,7 +41,7 @@ export class UserService {
     return this.repo.createUser(data);
   }
 
-  async getUser(id: number): Promise<USERS | null> {
+  async getUser(id: number): Promise<UserResponseDto | null> {
     const user = await this.findUserById({ userId: id });
     if (user === null) {
       throw new NotFoundException('Identifiant inconnu');

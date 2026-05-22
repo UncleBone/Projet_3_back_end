@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { RENTALS } from '../generated/prisma/client';
 import { RentalRepo } from 'src/repository/rental.repo';
+import { CreateRentalDto, FormRentalDto } from 'src/dto/rental.dto';
 
 @Injectable()
 export class RentalService {
@@ -27,14 +28,7 @@ export class RentalService {
     return this.repo.rentals({});
   }
 
-  async createRental(data: {
-    name: string;
-    surface: number;
-    price: number;
-    picture?: string;
-    description: string;
-    owner_id: number;
-  }) {
+  async createRental(data: CreateRentalDto) {
     if (
       !data ||
       !data.name ||
@@ -50,13 +44,7 @@ export class RentalService {
   }
 
   async updateRental(
-    data: {
-      name?: string;
-      surface?: number;
-      picture?: string;
-      price?: number;
-      description?: string;
-    },
+    data: Partial<FormRentalDto>,
     userId: number,
     rentalId: number,
   ): Promise<{ message: string }> {
@@ -69,7 +57,15 @@ export class RentalService {
         'This rental can only be modified by its owner',
       );
     }
-    this.repo.updateRental({ where: { id: rentalId }, data });
+    let rentalData = {};
+    for (var key in data) {
+      if (key === "surface" || key === "description") {
+        rentalData[key] = Number(data[key]);
+      }else{
+        rentalData[key] = data[key];
+      }
+    }
+    this.repo.updateRental({ where: { id: rentalId }, data: rentalData });
     return { message: 'Rental updated !' };
   }
 }

@@ -8,6 +8,8 @@ import {
   ParseIntPipe,
   Request,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { RentalService } from '../services/rental.service';
 import { RENTALS } from '../generated/prisma/client';
@@ -21,6 +23,9 @@ import {
   ApiOperation,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { CreateRentalDto, FormRentalDto } from 'src/dto/rental.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import 'multer';
 
 @Controller()
 export class RentalController {
@@ -115,20 +120,24 @@ export class RentalController {
   })
   @UseGuards(JwtAuthGuard)
   @Post('api/rentals')
+  @UseInterceptors(FileInterceptor('picture', { dest: 'uploads/' }))
   async createRental(
     @Body()
-    rentalData: {
-      name: string;
-      surface: number;
-      picture?: string;
-      price: number;
-      description: string;
-      owner_id: number;
-    },
+      rentalData: FormRentalDto,
     @Request() req,
+    @UploadedFile() picture: Express.Multer.File
   ) {
-    rentalData.owner_id = req.user.userId;
-    return this.rentalService.createRental(rentalData);
+    let data: CreateRentalDto = {
+      name: rentalData.name,
+      description: rentalData.description,
+      surface: Number(rentalData.surface),
+      price: Number(rentalData.price),
+      owner_id: req.user.userId
+    }
+    if(picture){
+      data.picture = picture.path;
+    }
+    return this.rentalService.createRental(data);
   }
 
   @ApiOperation({ description: 'Update rental' })
@@ -162,14 +171,7 @@ export class RentalController {
   @Put('api/rentals/:id')
   async updateRental(
     @Param('id', ParseIntPipe) id: number,
-    @Body()
-    data: {
-      name?: string;
-      surface?: number;
-      picture?: string;
-      price?: number;
-      description?: string;
-    },
+    @Body() data: Partial<FormRentalDto>,
     @Request() req,
   ) {
     const userId = req.user.userId;
