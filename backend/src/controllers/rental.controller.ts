@@ -56,7 +56,7 @@ export class RentalController {
     },
   })
   @UseGuards(JwtAuthGuard)
-  @Get('rentals')
+  @Get('api/rentals')
   async getRentals(): Promise<Array<RENTALS>> {
     return this.rentalService.getAllRentals();
   }
@@ -86,7 +86,7 @@ export class RentalController {
     },
   })
   @UseGuards(JwtAuthGuard)
-  @Get('rentals/:id')
+  @Get('api/rentals/:id')
   async getRental(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<RENTALS | null> {
@@ -119,7 +119,7 @@ export class RentalController {
     },
   })
   @UseGuards(JwtAuthGuard)
-  @Post('rentals')
+  @Post('api/rentals')
   @UseInterceptors(FileInterceptor('picture', { dest: 'uploads/' }))
   async createRental(
     @Body()
@@ -168,7 +168,7 @@ export class RentalController {
     },
   })
   @UseGuards(JwtAuthGuard)
-  @Put('rentals/:id')
+  @Put('api/rentals/:id')
   async updateRental(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Partial<FormRentalDto>,

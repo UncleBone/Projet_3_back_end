@@ -53,7 +53,7 @@ export class UserController {
       properties: { token: { type: 'string' } },
     },
   })
-  @Post('auth/register')
+  @Post('api/auth/register')
   async signupUser(@Body() userData: CreateUserDto) {
     let user: USERS | BadRequestException;
     try {
@@ -86,7 +86,7 @@ export class UserController {
     },
   })
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
+  @Post('api/auth/login')
   async loginUser(@Request() req) {
     return this.authService.login(req.user);
   }
@@ -110,7 +110,7 @@ export class UserController {
     },
   })
   @UseGuards(JwtAuthGuard)
-  @Get('auth/me')
+  @Get('api/auth/me')
   getProfile(@Request() req) {
     return this.userService.findUserById(req.user);
   }
@@ -137,7 +137,7 @@ export class UserController {
     },
   })
   @UseGuards(JwtAuthGuard)
-  @Get('user/:id')
+  @Get('api/user/:id')
   getUser(@Param('id', ParseIntPipe) id: number) {
     return this.userService.getUser(id);
   }
