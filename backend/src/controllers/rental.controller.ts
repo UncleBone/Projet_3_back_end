@@ -148,7 +148,7 @@ export class RentalController {
       owner_id: req.user.userId
     }
     if(picture){
-      data.picture = "../backend/"+picture.path;
+      data.picture = "http://localhost:3001/"+picture.path;
     }
     return this.rentalService.createRental(data);
   }
