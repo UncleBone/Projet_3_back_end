@@ -32,11 +32,17 @@ Ou via MySQL Workbench / DBeaver :
 1. Ouvrir le fichier `ressources/sql/schema.sql`
 2. Exécuter le script
 
-#### 4. Installer et lancer le back-end NestJS
+#### 4. Installer le back-end NestJS
 
 ```bash
 cd backend
 npm install
+```
+### 5. Modifier les identifiants de connection à la BD
+(Dans l'adaptateur PrismaMariaDb de prisma.service.ts)
+
+### 6. Lancer le back-end
+```
 npm run start:dev
 ```
 
@@ -68,7 +74,7 @@ Projet_3_back_end/
 │   │   ├── app.module.ts
 │   │   ├── main.ts
 │   │   ├── prisma.config.ts
-│   │   └── prisma.service.ts
+│   │   └── prisma.service.ts		#adaptateur MySQL
 │   └── uploads/			# images updloadées
 ├── ressources/
 │   ├── mockoon/           # Environnement Mockoon
