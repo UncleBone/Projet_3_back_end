@@ -18,9 +18,7 @@ export class UserService {
 
   async findUserById({ userId }: { userId: number }): Promise<UserResponseDto | null> {
     const user = await this.repo.userById({ userId });
-    return plainToInstance(UserResponseDto, user, {
-      excludeExtraneousValues: true,
-    });
+    return plainToInstance(UserResponseDto, user);
   }
 
   async createUser(data: { name: string; email: string; password: string }) {

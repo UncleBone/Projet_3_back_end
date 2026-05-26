@@ -6,7 +6,8 @@ import {
 } from '@nestjs/common';
 import { RENTALS } from '../generated/prisma/client';
 import { RentalRepo } from 'src/repository/rental.repo';
-import { CreateRentalDto, FormRentalDto } from 'src/dto/rental.dto';
+import { CreateRentalDto, FormRentalDto, RentalOwnerDto } from 'src/dto/rental.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class RentalService {
@@ -16,16 +17,25 @@ export class RentalService {
     return this.repo.rental({ id });
   }
 
-  async getRental({ id }: { id: number }): Promise<RENTALS | null> {
-    const rental = await this.findRental({ id });
+  async getRental({ id }: { id: number }) {
+    let rental = await this.findRental({ id });
     if (rental === null) {
       throw new NotFoundException();
     }
-    return rental;
+    rental["owner"] = plainToInstance(RentalOwnerDto, rental["USERS"], { excludeExtraneousValues: true });
+    delete rental["USERS"];
+    
+    return rental
   }
 
-  async getAllRentals(): Promise<Array<RENTALS>> {
-    return this.repo.rentals({});
+  async getAllRentals() {
+    const allRentals = await this.repo.rentals({});
+    allRentals.forEach(
+      function (rental) {
+        rental["owner"] = plainToInstance(RentalOwnerDto, rental["USERS"], { excludeExtraneousValues: true });
+        delete rental["USERS"];
+      });
+    return { "rentals": allRentals };
   }
 
   async createRental(data: CreateRentalDto) {
@@ -44,7 +54,7 @@ export class RentalService {
   }
 
   async updateRental(
-    data: Partial<FormRentalDto>,
+    data: Partial<CreateRentalDto>,
     userId: number,
     rentalId: number,
   ): Promise<{ message: string }> {
@@ -57,15 +67,8 @@ export class RentalService {
         'This rental can only be modified by its owner',
       );
     }
-    let rentalData = {};
-    for (var key in data) {
-      if (key === "surface" || key === "description") {
-        rentalData[key] = Number(data[key]);
-      }else{
-        rentalData[key] = data[key];
-      }
-    }
-    this.repo.updateRental({ where: { id: rentalId }, data: rentalData });
+
+    this.repo.updateRental({ where: { id: rentalId }, data: data });
     return { message: 'Rental updated !' };
   }
 }

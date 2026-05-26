@@ -38,26 +38,35 @@ export class RentalController {
   @ApiOkResponse({
     description: 'Return all rentals',
     schema: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: { type: 'number' },
-          name: { type: 'string' },
-          surface: { type: 'number' },
-          price: { type: 'number' },
-          picture: { type: 'string' },
-          description: { type: 'string' },
-          owner_id: { type: 'number' },
-          created_at: { type: 'string' },
-          updated_at: { type: 'string' },
-        },
-      },
+      type: 'object',
+      properties: {
+        "rentals": {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: { type: 'number' },
+              name: { type: 'string' },
+              surface: { type: 'number' },
+              price: { type: 'number' },
+              picture: { type: 'string' },
+              description: { type: 'string' },
+              owner_id: { type: 'number' },
+              created_at: { type: 'string' },
+              updated_at: { type: 'string' },
+              owner: { 
+                type: 'object',
+                properties: { id: { type: 'number' }, name: { type: 'string' } }
+              }
+            },
+          }
+        }
+      }
     },
   })
   @UseGuards(JwtAuthGuard)
   @Get('api/rentals')
-  async getRentals(): Promise<Array<RENTALS>> {
+  async getRentals() {
     return this.rentalService.getAllRentals();
   }
 
@@ -82,6 +91,10 @@ export class RentalController {
         owner_id: { type: 'number' },
         created_at: { type: 'string' },
         updated_at: { type: 'string' },
+        owner: { 
+          type: 'object',
+          properties: { id: { type: 'number' }, name: { type: 'string' } }
+        }
       },
     },
   })
@@ -89,7 +102,7 @@ export class RentalController {
   @Get('api/rentals/:id')
   async getRental(
     @Param('id', ParseIntPipe) id: number,
-  ): Promise<RENTALS | null> {
+  ) {
     return this.rentalService.getRental({ id });
   }
 
@@ -135,7 +148,7 @@ export class RentalController {
       owner_id: req.user.userId
     }
     if(picture){
-      data.picture = picture.path;
+      data.picture = "../backend/"+picture.path;
     }
     return this.rentalService.createRental(data);
   }
@@ -171,7 +184,7 @@ export class RentalController {
   @Put('api/rentals/:id')
   async updateRental(
     @Param('id', ParseIntPipe) id: number,
-    @Body() data: Partial<FormRentalDto>,
+    @Body() data: Partial<CreateRentalDto>,
     @Request() req,
   ) {
     const userId = req.user.userId;

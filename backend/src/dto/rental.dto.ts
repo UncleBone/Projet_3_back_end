@@ -1,5 +1,7 @@
 import { IsString, IsNotEmpty, IsNumber, IsEmpty } from 'class-validator';
-import { Transform, Exclude, Expose } from 'class-transformer';
+import { Transform, Exclude, Expose, Type } from 'class-transformer';
+import type { USERS } from 'src/generated/prisma/client';
+import { Decimal } from '@prisma/client/runtime/client';
 
 export class FormRentalDto {
   @IsString()
@@ -44,4 +46,12 @@ export class CreateRentalDto {
 
   @IsNumber()
   owner_id: number;
+}
+
+export class RentalOwnerDto {
+  @Expose()
+  id: number;
+
+  @Expose()
+  name: string;
 }
