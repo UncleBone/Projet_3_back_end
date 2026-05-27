@@ -38,8 +38,31 @@ Ou via MySQL Workbench / DBeaver :
 cd backend
 npm install
 ```
-### 5. Modifier les identifiants de connection à la BD
-(Dans l'adaptateur PrismaMariaDb de prisma.service.ts)
+### 5. Rajouter les identifiants de connection à la BD
+Dans backend/src, créer le fichier prisma.service.ts avec le code suivant:
+```
+import { Injectable } from '@nestjs/common';
+import { PrismaClient } from './generated/prisma/client';
+import { PrismaMariaDb } from '@prisma/adapter-mariadb';
+
+@Injectable()
+export class PrismaService extends PrismaClient {
+  constructor() {
+    const adapter = new PrismaMariaDb({
+      user: ...,
+      password: ...,
+      host: ...,
+      database: 'chatop_db',
+      port: ...,
+      connectionLimit: 5,
+      allowPublicKeyRetrieval: true,
+    });
+    super({ adapter });
+  }
+}
+```
+
+(Remplacer les "..." par les identifiants de connection à la base de donnée)
 
 ### 6. Lancer le back-end
 ```
