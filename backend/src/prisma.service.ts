@@ -6,10 +6,10 @@ import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 export class PrismaService extends PrismaClient {
   constructor() {
     const adapter = new PrismaMariaDb({
-      user: 'root',
-      password: 'root',
-      host: 'localhost',
-      database: 'chatop_db',
+      user: process.env['DATABASE_USER'],
+      password: process.env['DATABASE_PASSWORD'],
+      host: process.env['DATABASE_HOST'],
+      database: process.env['DATABASE_DATABASE'],
       port: 3306,
       connectionLimit: 5,
       allowPublicKeyRetrieval: true,

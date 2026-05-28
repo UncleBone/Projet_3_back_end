@@ -41,7 +41,6 @@ lerna-debug.log*
 .env.test.local
 .env.production.local
 .env.local
-prisma.service.ts
 
 # temp directory
 .temp
