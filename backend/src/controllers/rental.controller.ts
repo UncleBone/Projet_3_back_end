@@ -10,6 +10,7 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  StreamableFile,
 } from '@nestjs/common';
 import { RentalService } from '../services/rental.service';
 import { RENTALS } from '../generated/prisma/client';
@@ -26,6 +27,8 @@ import {
 import { CreateRentalDto, FormRentalDto } from 'src/dto/rental.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer';
+import { createReadStream } from 'node:fs';
+import { join } from 'node:path';
 
 @Controller()
 export class RentalController {
@@ -189,5 +192,13 @@ export class RentalController {
   ) {
     const userId = req.user.userId;
     return this.rentalService.updateRental(data, userId, id);
+  }
+
+  @Get('uploads/:fileName')
+  getImage(
+    @Param('fileName') fileName: string
+  ): StreamableFile {
+    const file = createReadStream(join(process.cwd()+'/uploads/'+fileName));
+    return new StreamableFile(file);
   }
 }
