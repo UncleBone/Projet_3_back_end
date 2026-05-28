@@ -15,6 +15,7 @@ async function bootstrap() {
         .setTitle('API chatop')
         .setDescription('API description')
         .setVersion('1.0')
+        .addBearerAuth()
         .addTag('rental')
         .build();
     const documentFactory = () => swagger_1.SwaggerModule.createDocument(app, config);

@@ -1,6 +1,7 @@
 import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiOkResponse,
   ApiOperation,
@@ -8,6 +9,7 @@ import {
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { MessageService } from 'src/services/message.service';
 
+@ApiBearerAuth()
 @Controller()
 export class MessageController {
   constructor(private readonly messageService: MessageService) {}

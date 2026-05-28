@@ -16,6 +16,7 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { UserService } from '../services/user.service';
 import { USERS } from '../generated/prisma/client';
@@ -108,6 +109,7 @@ export class UserController {
       },
     },
   })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('api/auth/me')
   getProfile(@Request() req) {

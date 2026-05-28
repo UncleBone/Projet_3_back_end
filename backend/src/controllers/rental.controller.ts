@@ -17,6 +17,7 @@ import { RENTALS } from '../generated/prisma/client';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -30,6 +31,7 @@ import 'multer';
 import { createReadStream } from 'node:fs';
 import { join } from 'node:path';
 
+@ApiBearerAuth()
 @Controller()
 export class RentalController {
   constructor(private readonly rentalService: RentalService) {}
